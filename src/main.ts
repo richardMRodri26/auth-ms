@@ -25,6 +25,8 @@ async function bootstrap() {
     })
   );
 
+  console.log(`Auth Microservice testing log`);
+
   await app.listen();
   
 }
