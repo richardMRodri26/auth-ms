@@ -46,8 +46,11 @@ COPY pnpm-lock.yaml ./
 RUN npm install -g pnpm
 RUN pnpm install --prod --no-frozen-lockfile
 
-# Copiar archivos generados de Prisma
-COPY --from=build /usr/src/app/generated ./generated
+# Copiar archivos generados de Prisma compilados (desde dist) para asegurarnos
+# de que los archivos JS resultantes estén disponibles en tiempo de ejecución.
+# Algunas configuraciones generan TypeScript en `generated/`, por lo que necesitamos
+# copiar los artefactos compilados que quedan bajo `dist/generated`.
+COPY --from=build /usr/src/app/dist/generated ./generated
 
 # Copiar la carpeta de DIST
 COPY --from=build /usr/src/app/dist ./dist
